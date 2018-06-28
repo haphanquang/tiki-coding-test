@@ -22,23 +22,21 @@ extension String {
         
         while (!scanner.isAtEnd) {
             scanner.scanUpTo(" ", into: &currentString)
-            if toValidateTweet.count < 50 {
+            if toValidateTweet.count < maxLength {
                 preTweet = toValidateTweet
-                toValidateTweet.append(currentString as! String)
+                toValidateTweet.append(currentString! as String)
             }
             
-            if toValidateTweet.count > 50 {
+            if toValidateTweet.count > maxLength {
                 result.append(preTweet)
                 
-                toValidateTweet = currentString as! String
+                toValidateTweet = currentString! as String
                 preTweet = toValidateTweet
             }
             toValidateTweet.append(" ")
             preTweet = toValidateTweet
         }
-        
-        print(result)
-        print(result.map({$0.count}))
-        return nil
+
+        return result
     }
 }

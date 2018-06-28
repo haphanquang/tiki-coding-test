@@ -56,11 +56,10 @@ extension ViewController {
         self.textView.refreshFirstResponder()
         
         let text = self.textView.text
-        text?.toTweets(50)
-        
-        let tweet = Tweet(text: self.textView.text)
-        self.allTweets.insert(tweet, at: 0)
-        self.tableView.reloadData()
+        if let result = text?.toTweets(50)?.map({ Tweet(text: $0) }) {
+            self.allTweets.insert(contentsOf: result, at: 0)
+            self.tableView.reloadData()
+        }
         
 //        let indexPath = IndexPath(row: 0, section: 0)
 //        let rowAnimation: UITableViewRowAnimation = self.isInverted ? .bottom : .top
