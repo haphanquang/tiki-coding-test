@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A927CC020E4540D00BB686C /* TweetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A927CBF20E4540D00BB686C /* TweetCell.swift */; };
+		7A927CC320E454A900BB686C /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A927CC220E454A900BB686C /* Extension.swift */; };
+		7A927CCC20E45FCA00BB686C /* SlackTextViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A927CCB20E45FCA00BB686C /* SlackTextViewController.framework */; };
+		7A927CCE20E45FE900BB686C /* SlackTextViewController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7A927CCB20E45FCA00BB686C /* SlackTextViewController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7A927CD120E462DB00BB686C /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A927CD020E462DB00BB686C /* Tweet.swift */; };
 		7AA6BD2E20E409C700EAD084 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA6BD2D20E409C700EAD084 /* AppDelegate.swift */; };
 		7AA6BD3020E409C700EAD084 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA6BD2F20E409C700EAD084 /* ViewController.swift */; };
 		7AA6BD3320E409C800EAD084 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7AA6BD3120E409C800EAD084 /* Main.storyboard */; };
@@ -25,7 +30,25 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		7A927CCF20E45FE900BB686C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7A927CCE20E45FE900BB686C /* SlackTextViewController.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		7A927CBF20E4540D00BB686C /* TweetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetCell.swift; sourceTree = "<group>"; };
+		7A927CC220E454A900BB686C /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		7A927CCB20E45FCA00BB686C /* SlackTextViewController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SlackTextViewController.framework; path = Carthage/Build/iOS/SlackTextViewController.framework; sourceTree = SOURCE_ROOT; };
+		7A927CD020E462DB00BB686C /* Tweet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 		7AA6BD2A20E409C700EAD084 /* TikiTweets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TikiTweets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AA6BD2D20E409C700EAD084 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7AA6BD2F20E409C700EAD084 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -43,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A927CCC20E45FCA00BB686C /* SlackTextViewController.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +80,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7A927CC120E4542000BB686C /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				7A927CC220E454A900BB686C /* Extension.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		7A927CCA20E45FBD00BB686C /* Libs */ = {
+			isa = PBXGroup;
+			children = (
+				7A927CCB20E45FCA00BB686C /* SlackTextViewController.framework */,
+			);
+			path = Libs;
+			sourceTree = "<group>";
+		};
 		7AA6BD2120E409C700EAD084 = {
 			isa = PBXGroup;
 			children = (
@@ -77,6 +117,8 @@
 		7AA6BD2C20E409C700EAD084 /* TikiTweets */ = {
 			isa = PBXGroup;
 			children = (
+				7A927CCA20E45FBD00BB686C /* Libs */,
+				7A927CC120E4542000BB686C /* Utils */,
 				7AA6BD4E20E40A8F00EAD084 /* Model */,
 				7AA6BD4D20E40A8F00EAD084 /* View */,
 				7AA6BD2D20E409C700EAD084 /* AppDelegate.swift */,
@@ -101,6 +143,7 @@
 		7AA6BD4D20E40A8F00EAD084 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7A927CBF20E4540D00BB686C /* TweetCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -108,6 +151,7 @@
 		7AA6BD4E20E40A8F00EAD084 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7A927CD020E462DB00BB686C /* Tweet.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -122,6 +166,7 @@
 				7AA6BD2620E409C700EAD084 /* Sources */,
 				7AA6BD2720E409C700EAD084 /* Frameworks */,
 				7AA6BD2820E409C700EAD084 /* Resources */,
+				7A927CCF20E45FE900BB686C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -213,8 +258,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A927CC020E4540D00BB686C /* TweetCell.swift in Sources */,
+				7A927CD120E462DB00BB686C /* Tweet.swift in Sources */,
 				7AA6BD3020E409C700EAD084 /* ViewController.swift in Sources */,
 				7AA6BD2E20E409C700EAD084 /* AppDelegate.swift in Sources */,
+				7A927CC320E454A900BB686C /* Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,7 +424,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Y78T5K69WL;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = TikiTweets/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -394,7 +447,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Y78T5K69WL;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = TikiTweets/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
