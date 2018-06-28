@@ -9,7 +9,7 @@
 import Foundation
 
 extension String {
-    func toTweets(_ maxLength: Int) -> [String]?{
+    func toTweets(_ maxLength: Int) -> [String]{
         
         var result: [String] = []
         let scanner = Scanner(string: self)
@@ -17,26 +17,32 @@ extension String {
         var currentString: NSString? = nil
         var preTweet: String = ""
         var toValidateTweet: String = ""
-        
-        
-        
+
         while (!scanner.isAtEnd) {
+            
             scanner.scanUpTo(" ", into: &currentString)
-            if toValidateTweet.count < maxLength {
-                preTweet = toValidateTweet
+            
+            guard let _ = currentString else {
+                return []
+            }
+            
+            if toValidateTweet.trimmingCharacters(in: .whitespacesAndNewlines).count < maxLength {
                 toValidateTweet.append(currentString! as String)
             }
             
-            if toValidateTweet.count > maxLength {
-                result.append(preTweet)
-                
+            if toValidateTweet.count >= maxLength {
+                result.append(preTweet.trimmingCharacters(in: .whitespacesAndNewlines))
                 toValidateTweet = currentString! as String
-                preTweet = toValidateTweet
             }
+            
             toValidateTweet.append(" ")
             preTweet = toValidateTweet
         }
-
+        
+        if preTweet.count <= 50 {
+            result.append(preTweet.trimmingCharacters(in: .whitespacesAndNewlines))
+        }
+        
         return result
     }
 }

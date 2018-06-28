@@ -11,7 +11,7 @@ import SlackTextViewController
 
 class ViewController: SLKTextViewController {
     
-    var allTweets: [Tweet] = []
+    var allTweets = [Tweet]()
     
     override var tableView: UITableView {
         get {
@@ -35,14 +35,13 @@ class ViewController: SLKTextViewController {
     }
     
     func configLayout () {
-        self.rightButton.setTitle("Generate", for: .normal)
+        self.rightButton.setTitle("Tweet", for: .normal) //need localized
         self.textInputbar.autoHideRightButton = false
-        
-        self.textInputbar.counterStyle = .split
-        self.textInputbar.counterPosition = .top
-        self.isInverted = true
+
+        self.isInverted = false
         
         self.textView.maxNumberOfLines = 6
+        self.tableView.reloadData()
     }
 
     func configDataSource () {
@@ -56,22 +55,10 @@ extension ViewController {
         self.textView.refreshFirstResponder()
         
         let text = self.textView.text
-        if let result = text?.toTweets(50)?.map({ Tweet(text: $0) }) {
-            self.allTweets.insert(contentsOf: result, at: 0)
+        if let result = text?.toTweets(50).map({ Tweet(text: "\($0) (\($0.count))") }) {
+            self.allTweets.append(contentsOf: result)
             self.tableView.reloadData()
         }
-        
-//        let indexPath = IndexPath(row: 0, section: 0)
-//        let rowAnimation: UITableViewRowAnimation = self.isInverted ? .bottom : .top
-//        let scrollPosition: UITableViewScrollPosition = self.isInverted ? .bottom : .top
-//
-//        self.tableView.beginUpdates()
-//        self.allTweets.insert(tweet, at: 0)
-//        self.tableView.insertRows(at: [indexPath], with: rowAnimation)
-//        self.tableView.endUpdates()
-//
-//        self.tableView.scrollToRow(at: indexPath, at: scrollPosition, animated: true)
-//        self.tableView.reloadRows(at: [indexPath], with: .automatic)
         
         super.didPressRightButton(sender)
     }
@@ -87,7 +74,7 @@ extension ViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return self.allTweets.count
+        return self.allTweets.count + 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -101,11 +88,19 @@ extension ViewController {
             let cell =  UITableViewCell(style: .default, reuseIdentifier: "CellID")
             cell.textLabel?.numberOfLines = 0
             cell.textLabel?.lineBreakMode = .byWordWrapping
+            cell.transform = self.tableView.transform
             return cell
         }
+        
+        if indexPath.row > allTweets.count {
+            cell.textLabel?.text = ""
+            return cell
+        }
+        
         cell.transform = self.tableView.transform
         
-        let tweet = self.allTweets[(indexPath as NSIndexPath).row]
+        let tweet = self.allTweets[indexPath.row]
+        
         cell.textLabel?.text = tweet.text
         
         return cell
