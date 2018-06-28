@@ -21,16 +21,60 @@ class TikiTweetsTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testExample1() {
+        // two tweets
+        let text = "The quick brown fox jumps over the lazy dog The quick brown fox jumps over the lazy dog"
+        let result = text.toTweets(50)
+        
+        return XCTAssertEqual(result, ["1/2 The quick brown fox jumps over the lazy dog", "2/2 The quick brown fox jumps over the lazy dog"])
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testExample2() {
+        //one tweet
+        let text = "The quick brown fox jumps over the lazy dog"
+        let result = text.toTweets(50)
+        
+        return XCTAssertEqual(result, ["The quick brown fox jumps over the lazy dog"])
+    }
+    
+    func testExample3() {
+        //one tweet exact 50 char
+        let text = "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        let result = text.toTweets(50)
+        
+        return XCTAssertEqual(result, ["Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"])
+    }
+    
+    func testExample4() {
+        //one string over 50 char
+        let text = "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        let result = text.toTweets(50)
+        
+        return XCTAssertEqual(result, [])
+    }
+    
+    func testExample5() {
+        //two strings over 50 chars
+        let text = "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        let result = text.toTweets(50)
+        
+        return XCTAssertEqual(result, [])
+    }
+    
+    func testExample6() {
+        //one over 50 chars one < 50 chars
+        let text = "Aaaaaaaaaaaaaaaaaaaaaaaaa1aaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaa2aaaaaaaa"
+        let result = text.toTweets(50)
+        
+        return XCTAssertEqual(result, ["Aaaaaaaaaaaaaaaaaaaaaaa2aaaaaaaa"])
+    }
+    
+    func testExample7() {
+        //one < 50 chars one over 50 chars
+        let text = "Aaaaaaaaaaaaaaaaaaaaaa2aaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaa1aaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        let result = text.toTweets(50)
+        
+        return XCTAssertEqual(result, ["Aaaaaaaaaaaaaaaaaaaaaaa2aaaaaaaa"])
     }
     
 }

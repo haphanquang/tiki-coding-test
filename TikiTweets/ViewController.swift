@@ -43,24 +43,31 @@ class ViewController: SLKTextViewController {
         self.textView.maxNumberOfLines = 6
         self.tableView.reloadData()
     }
-
-    func configDataSource () {
-        
-    }
     
 }
 
 extension ViewController {
     override func didPressRightButton(_ sender: Any?) {
         self.textView.refreshFirstResponder()
-        
         let text = self.textView.text
-        if let result = text?.toTweets(50).map({ Tweet(text: "\($0) (\($0.count))") }) {
-            self.allTweets.append(contentsOf: result)
-            self.tableView.reloadData()
+        
+        guard let result = text?.toTweets(50), !result.isEmpty else {
+            alertError()
+            super.didPressRightButton(sender)
+            return
         }
         
+        self.allTweets.append(contentsOf: result.map({ Tweet(text: "\($0) (\($0.count))") }))
+        self.tableView.reloadData()
+        
         super.didPressRightButton(sender)
+    }
+    
+    func alertError() {
+        let alert = UIAlertController(title: "Tweet", message: "The message is invalid", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
     }
 }
 
@@ -73,37 +80,27 @@ extension ViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return self.allTweets.count + 1
+        return self.allTweets.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         return self.tweetCellAt(indexPath)
     }
     
     func tweetCellAt(_ indexPath: IndexPath) -> UITableViewCell {
+        var cell = self.tableView.dequeueReusableCell(withIdentifier: "CellID")
         
-        guard let cell = self.tableView.dequeueReusableCell(withIdentifier: "CellID") else {
-            let cell =  UITableViewCell(style: .default, reuseIdentifier: "CellID")
-            cell.textLabel?.numberOfLines = 0
-            cell.textLabel?.lineBreakMode = .byWordWrapping
-            cell.transform = self.tableView.transform
-            return cell
+        if cell == nil{
+            cell = UITableViewCell(style: .default, reuseIdentifier: "CellID")
+            cell?.textLabel?.numberOfLines = 0
+            cell?.textLabel?.lineBreakMode = .byWordWrapping
+            cell?.transform = self.tableView.transform
         }
-        
-        if indexPath.row > allTweets.count {
-            cell.textLabel?.text = ""
-            return cell
-        }
-        
-        cell.transform = self.tableView.transform
         
         let tweet = self.allTweets[indexPath.row]
+        cell?.textLabel?.text = tweet.text
         
-        cell.textLabel?.text = tweet.text
-        
-        return cell
+        return cell!
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
