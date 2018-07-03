@@ -61,7 +61,19 @@ extension String {
             result.append(preTweet.trimmingCharacters(in: .whitespacesAndNewlines))
         }
         
-        return result
+        //estimate the length is correct but value is incorrect
+        //so just replace the index
+        //can be improvement (!)
+        
+        var newResult = [String]()
+        for i in 1...result.count {
+            var arr = result[i-1].components(separatedBy: " ")
+            arr.remove(at: 0)
+            arr.insert("\(i)/\(result.count)", at: 0)
+            newResult.append(arr.joined(separator: " "))
+        }
+        
+        return newResult
     }
     
     func getTweetCountWithIndexes(max: Int) -> Int {
@@ -74,15 +86,18 @@ extension String {
             return 1
         }
     
-        
+        //change the estimated tweets count until the length not change
         var realTweetCount = Int.max
-        var tempToTrack: Int = 0
+        var tempToTrack: Int = 0 //track prev estimated
         
         repeat {
+            
             tempToTrack = estimateTweetsCount
             
             var stringCount = selfCount
+            
             for i in 1...estimateTweetsCount {
+                //increase for every part
                 let indexString = "\(i)/\(estimateTweetsCount) "
                 stringCount = stringCount + indexString.count
             }
@@ -92,10 +107,10 @@ extension String {
             if realTweetCount > estimateTweetsCount {
                 estimateTweetsCount = realTweetCount
             }
+            
         } while tempToTrack < realTweetCount
 
-        
-        
+
         return estimateTweetsCount
     }
 }
