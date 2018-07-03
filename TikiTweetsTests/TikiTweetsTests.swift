@@ -66,7 +66,7 @@ class TikiTweetsTests: XCTestCase {
         let text = "Aaaaaaaaaaaaaaaaaaaaaaaaa1aaaaaaaaaaaaaaaaaaaaaaaaaaaa Aaaaaaaaaaaaaaaaaaaaaa2aaaaaaaa"
         let result = text.toTweets(50)
         
-        return XCTAssertEqual(result, ["Aaaaaaaaaaaaaaaaaaaaaaa2aaaaaaaa"])
+        return XCTAssertEqual(result, [])
     }
     
     func testExample7() {
@@ -74,7 +74,7 @@ class TikiTweetsTests: XCTestCase {
         let text = "Aaaaaaaaaaaaaaaaaaaaaa2aaaaaaaa Aaaaaaaaaaaaaaaaaaaaaaaaa1aaaaaaaaaaaaaaaaaaaaaaaaaaaa"
         let result = text.toTweets(50)
         
-        return XCTAssertEqual(result, ["Aaaaaaaaaaaaaaaaaaaaaaa2aaaaaaaa"])
+        return XCTAssertEqual(result, [])
     }
     
 }

@@ -11,7 +11,7 @@ import SlackTextViewController
 
 class ViewController: SLKTextViewController {
     
-    var allTweets = [Tweet]()
+    var allTweets: [[Tweet]] = []
     
     override var tableView: UITableView {
         get {
@@ -35,6 +35,9 @@ class ViewController: SLKTextViewController {
     }
     
     func configLayout () {
+        self.edgesForExtendedLayout = .init(rawValue: 0)
+        self.title = "Tweeetie"
+        
         self.rightButton.setTitle("Tweet", for: .normal) //need localized
         self.textInputbar.autoHideRightButton = false
 
@@ -57,7 +60,7 @@ extension ViewController {
             return
         }
         
-        self.allTweets.append(contentsOf: result.map({ Tweet(text: "\($0) (\($0.count))") }))
+        self.allTweets.append(result.map({ Tweet(text: "\($0) (\($0.count))") }))
         self.tableView.reloadData()
         
         super.didPressRightButton(sender)
@@ -76,11 +79,11 @@ extension ViewController {
     // MARK: - UITableViewDataSource Methods
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return self.allTweets.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.allTweets.count
+        return self.allTweets[section].count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -97,7 +100,7 @@ extension ViewController {
             cell?.transform = self.tableView.transform
         }
         
-        let tweet = self.allTweets[indexPath.row]
+        let tweet = self.allTweets[indexPath.section][indexPath.row]
         cell?.textLabel?.text = tweet.text
         
         return cell!

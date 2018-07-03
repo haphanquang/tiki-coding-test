@@ -11,9 +11,9 @@ import Foundation
 extension String {
     
     func toTweets(_ maxLength: Int) -> [String]{
-        let estimateTweetsCount = self.count / maxLength + ((self.count % maxLength > 0) ? 1 : 0)
+
+        let estimateTweetsCount = self.getTweetCountWithIndexes(max: maxLength)
         
-        //1 tweet because <= 50
         if estimateTweetsCount == 1 {
             return [self]
         }
@@ -32,7 +32,7 @@ extension String {
             //to meet space character
             scanner.scanUpTo(" ", into: &currentString)
             
-            guard let _ = currentString else {
+            guard let string = currentString, string.length < maxLength else {
                 //error while scanning
                 return []
             }
@@ -43,7 +43,7 @@ extension String {
             }
             
             //if new string longer than max -> add prev to result
-            if toValidateTweet.count > maxLength && preTweet.count > 0 && preTweet.count <= 50{
+            if toValidateTweet.count > maxLength && preTweet.count > 0{
                 result.append(preTweet.trimmingCharacters(in: .whitespacesAndNewlines))
                 
                 let indexText = "\(result.count + 1)/\(estimateTweetsCount)"
@@ -62,5 +62,40 @@ extension String {
         }
         
         return result
+    }
+    
+    func getTweetCountWithIndexes(max: Int) -> Int {
+        //first estimate
+        let selfCount = self.count
+        var estimateTweetsCount = selfCount / max + ((selfCount % max > 0) ? 1 : 0)
+        
+        //one tweet because <= max
+        if estimateTweetsCount == 1 {
+            return 1
+        }
+    
+        
+        var realTweetCount = Int.max
+        var tempToTrack: Int = 0
+        
+        repeat {
+            tempToTrack = estimateTweetsCount
+            
+            var stringCount = selfCount
+            for i in 1...estimateTweetsCount {
+                let indexString = "\(i)/\(estimateTweetsCount) "
+                stringCount = stringCount + indexString.count
+            }
+            
+            realTweetCount = stringCount / max + ((stringCount % max > 0) ? 1 : 0)
+            
+            if realTweetCount > estimateTweetsCount {
+                estimateTweetsCount = realTweetCount
+            }
+        } while tempToTrack < realTweetCount
+
+        
+        
+        return estimateTweetsCount
     }
 }
